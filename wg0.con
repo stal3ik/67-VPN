@@ -1,0 +1,14 @@
+[Interface]
+# Приватный ключ сервера (заменить на сгенерированный)
+PrivateKey = <SERVER_PRIVATE_KEY>
+Address = 10.0.0.1/24
+ListenPort = 51820
+
+# Настройка NAT при поднятии и опускании интерфейса
+PostUp = iptables -A FORWARD -i wg0 -j ACCEPT; iptables -t nat -A POSTROUTING -o eth0 -j MASQUERADE
+PostDown = iptables -D FORWARD -i wg0 -j ACCEPT; iptables -t nat -D POSTROUTING -o eth0 -j MASQUERADE
+
+[Peer]
+# Публичный ключ клиента (заменить на сгенерированный)
+PublicKey = <CLIENT_PUBLIC_KEY>
+AllowedIPs = 10.0.0.2/32
